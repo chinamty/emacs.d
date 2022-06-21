@@ -100,6 +100,7 @@
   :diminish
   :commands (go-playground-mode))
 
+(use-package protobuf-mode)
 (provide 'init-go)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -16,16 +16,13 @@
 (delete-selection-mode 1)
 ;; 高亮当前行
 (global-hl-line-mode 1)
-;; 主题
 
-(use-package solarized-theme
-  :init(load-theme 'solarized-dark t))
 
 
 ;; 设置默认窗口位置大小
 ;; 全屏
-;; (setq initial-frame-alist (quote ((fullscreen . maximized))))
-(setq initial-frame-alist '((top . 0) (left . 1100)   (width . 120) (height . 100)))
+;;(setq initial-frame-alist (quote ((fullscreen . maximized))))
+(setq initial-frame-alist '((top . 0) (left . 200)   (width . 80) (height . 100)))
 
 
 (provide 'init-ui)
