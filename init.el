@@ -14,7 +14,7 @@
 
 (require 'init-packages)
 (require 'init-system)
-
+(require 'init-smartpair)
 (require 'init-utils)
 (require 'init-project)
 (require 'init-flycheck)
@@ -34,8 +34,7 @@
 (require 'init-rust)
 ;;(require 'init-eaf)
 ;;(require 'init-treesitter)
-
-
+(require 'thing-edit)
 
 
 ;;; init.el ends here

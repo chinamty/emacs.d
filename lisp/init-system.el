@@ -3,14 +3,22 @@
 ;;; commentary:
 
 ;;; code:
-;;; Emacs 28 native compile
-(when (and (>= emacs-major-version 28)
-	       (fboundp 'native-comp-available-p)
-	       (native-comp-available-p))
-  (setq native-comp-async-report-warnings-errors nil)
-  (setq package-native-compile t)
-  (add-to-list 'native-comp-eln-load-path
-	           (expand-file-name "eln-cache" user-emacs-directory)))
+;; ;;; Emacs 28 native compile
+;; (when (and (>= emacs-major-version 28)
+;; 	       (fboundp 'native-comp-available-p)
+;; 	       (native-comp-available-p))
+;;   (setq native-comp-async-report-warnings-errors nil)
+;;   (setq package-native-compile t)
+;;   (add-to-list 'native-comp-eln-load-path
+;; 	           (expand-file-name "eln-cache" user-emacs-directory)))
+
+;;; macOS special settings
+;; <macOS> Command -> Meta, Option -> Super
+(when (eq system-type 'darwin)
+
+  (setq mac-command-modifier 'meta
+	    mac-option-modifier 'super
+	    ns-use-native-fullscreen t))
 
 ;;; system coding
 ;; although others may add many other settings here,
@@ -46,16 +54,9 @@
 
 ;; 设置默认窗口位置大小
 ;; 全屏
-;;(setq initial-frame-alist (quote ((fullscreen . maximized))))
-(setq initial-frame-alist '((top . 0) (left . 200)   (width . 80) (height . 100)))
+(setq initial-frame-alist (quote ((fullscreen . maximized))))
+;;(setq initial-frame-alist '((top . 0) (left . 200)   (width . 80) (height . 100)))
 
-;;; macOS special settings
-;; <macOS> Command -> Meta, Option -> Super
-(when (eq system-type 'darwin)
-
-  (setq mac-command-modifier 'meta
-	    mac-option-modifier 'super
-	    ns-use-native-fullscreen t))
 
 
 ;; 设置编码为utf-8
@@ -80,14 +81,6 @@
 ;; 全局符号补全
 ;;(electric-pair-mode 1)
 
-;; 自动括号匹配
-(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
-(define-advice show-paren-function (:around (fn) fix-show-paren-function)
-  "Highlight enclosing parens."
-  (cond ((looking-at-p "\\s(") (funcall fn))
-	    (t (save-excursion
-	     (ignore-errors (backward-up-list))
-	     (funcall fn)))))
 
 
 ;; Settings for exec-path-from-shell

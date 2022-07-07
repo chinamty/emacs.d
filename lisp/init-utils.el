@@ -1,8 +1,16 @@
 ;;; package --- init-utils -*- lexical-binding: t -*-
 ;;; Commentary:
-;;; 
+;;;
 ;;; code:
 
+
+;; add third party packages load path
+
+(add-to-list 'load-path "~/.emacs.d/packages/auto-save")
+(require 'auto-save)
+(auto-save-enable)
+(setq auto-save-silent t)
+(setq auto-save-delete-trailing-whitespace t)
 
 ;; magit
 
@@ -13,16 +21,16 @@
   :hook (after-init . global-auto-revert-mode))
 
 
-(use-package smartparens
-  :init
-  (smartparens-global-mode t)
-  (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
-  (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
-  (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil)
-  :config
-    (sp-with-modes
-        '(c++-mode objc-mode c-mode go-mode)
-      (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
+;; (use-package smartparens
+;;   :init
+;;   (smartparens-global-mode t)
+;;   (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
+;;   (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
+;;   (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil)
+;;   :config
+;;     (sp-with-modes
+;;         '(c++-mode objc-mode c-mode go-mode)
+;;       (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 
 ;; ebook reader
@@ -90,11 +98,11 @@
   :config
   (setq mc/insert-numbers-default 1))
 (use-package json-mode)
-(use-package projectile
-  :ensure t
-  :config
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1))
+;; (use-package projectile
+;;   :ensure t
+;;   :config
+;;   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;;   (projectile-mode +1))
 
 (provide 'init-utils)
 ;;; init-utils.el ends here
