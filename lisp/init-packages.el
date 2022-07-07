@@ -11,17 +11,19 @@
 
 (require 'package)
 
-(setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
-                         ("nongnu" . "http://elpa.zilongshanren.com/nongnu/")
-			 ("melpa" . "http://elpa.zilongshanren.com/melpa/")))
+ ;; (setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
+ ;;                          ("nongnu" . "http://elpa.zilongshanren.com/nongnu/")
+ ;; 			  ("melpa" . "http://elpa.zilongshanren.com/melpa/")))
+
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("nongu". "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 
 
 
 ;; Initialize packages
-(unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
-  (setq package-enable-at-startup nil)          ; To prevent initializing twice
-  (package-initialize))
+(package-initialize)
 ;;防止反复调用 package-refresh-contents 会影响加载速度
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -40,6 +42,7 @@
   (setq use-package-always-defer t)
   (setq use-package-expand-minimally t)
   (setq use-package-enable-imenu-support t))
+(package-install 'use-package) 
 
 (eval-when-compile
   (require 'use-package))

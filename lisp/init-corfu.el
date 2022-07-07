@@ -5,10 +5,11 @@
 
 (use-package corfu
   :custom
-  (corfu-auto t);; Enable auto completion
+;;  (corfu-auto t);; Enable auto completion
   (corfu-quit-at-boundary t)
   (corfu-quit-no-match t)
   (corfu-auto-prefix 2)
+  (corfu-history-mode t)
   ;; (corfu-separator ?_) ;; Set to orderless separator, if not using space
   :bind
   ;; Another key binding can be used, such as S-SPC.
@@ -125,7 +126,7 @@
   ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
   ;;(add-to-list 'completion-at-point-functions #'cape-ispell)
   ;;(add-to-list 'completion-at-point-functions #'cape-dict)
-  ;;(add-to-list 'completion-at-point-functions #'cape-symbol)
+  (add-to-list 'completion-at-point-functions #'cape-symbol)
   ;;(add-to-list 'completion-at-point-functions #'cape-line)
 )
 

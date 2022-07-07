@@ -16,20 +16,23 @@
 (require 'init-system)
 
 (require 'init-utils)
+(require 'init-project)
 (require 'init-flycheck)
 (require 'init-consult)
 (require 'init-corfu)
 (require 'init-yasnippet)
 ;;(require 'init-lsp)
+(require 'init-markdown)
 (require 'init-lspbridge)
 ;;(require 'init-eglot)
 
 (require 'init-org)
-(require 'init-markdown)
+
 (require 'init-go)
 (require 'init-python)
 (require 'init-treemacs)
 (require 'init-rust)
+;;(require 'init-eaf)
 ;;(require 'init-treesitter)
 
 

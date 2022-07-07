@@ -3,18 +3,14 @@
 ;;; 
 ;;; code:
 
-;;  after load 最主要的作用是提供了一个宏after-load，供后续的各初始化函数使用。
-;;  这个函数来自Purcell，目的是把一些相互依赖的feature的加载顺序理顺，例如feature
-;;  A依赖于feature B，则可以写成(after-load 'B 'A)，这样如果错误地在B之前require了A也不会影响正常启动。
-(defmacro after-load (feature &rest body)
-  "After FEATURE is loaded, evaluate BODY."
-  (declare (indent defun))
-  `(eval-after-load ,feature
-     '(progn ,@body)))
 
 ;; magit
 
 (use-package magit)
+;; 自动cover被外部修改的文件
+(use-package autorevert
+  :ensure nil
+  :hook (after-init . global-auto-revert-mode))
 
 
 (use-package smartparens
@@ -93,6 +89,12 @@
          ("C-|" . mc/vertical-align-with-space))
   :config
   (setq mc/insert-numbers-default 1))
-
+(use-package json-mode)
+(use-package projectile
+  :ensure t
+  :config
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1))
 
 (provide 'init-utils)
+;;; init-utils.el ends here
