@@ -12,21 +12,6 @@
 
 
 (add-to-list 'load-path "~/.emacs.d/packages/lsp-bridge/")
-(use-package all-the-icons
-  :if (display-graphic-p))
-
-
-(use-package posframe
-  :config
-  (defvar my-posframe-buffer " *my-posframe-buffer*")
-
-(with-current-buffer (get-buffer-create my-posframe-buffer)
-  (erase-buffer))
-  
-
-(when (posframe-workable-p)
-  (posframe-show my-posframe-buffer
-                 :position (point))))
 
 
 
@@ -74,7 +59,7 @@
 ;;; Require
 (require 'lsp-bridge)
 (require 'lsp-bridge-jdtls)
-(setq lsp-bridge-enable-auto-format-code t)
+
 ;;; Code:
 
 (global-lsp-bridge-mode)
@@ -103,7 +88,7 @@
     (dumb-jump-back))))
 
 ;; 打开日志，开发者才需要
-(setq lsp-bridge-enable-log t)
+;;(setq lsp-bridge-enable-log t)
 
 (provide 'init-lspbridge)
 ;;; init-lspbridge.el ends here

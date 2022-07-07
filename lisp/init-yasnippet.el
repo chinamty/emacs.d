@@ -20,7 +20,8 @@
          :map yas-keymap
          ("C-i" . yas-next-field-or-maybe-expand))
   :config
-  (yas-reload-all))
+  (yas-reload-all)
+  (yas-global-mode 1))
 
 (use-package yasnippet-snippets
   :defer t

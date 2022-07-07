@@ -1,5 +1,43 @@
 ;; 	-*- lexical-binding: t -*-
 
+
+(use-package all-the-icons
+  :if (display-graphic-p))
+
+
+(use-package posframe
+  :init
+    (defface posframe-border
+      `((t (:background ,(face-foreground 'shadow nil t))))
+      "Face used by the `posframe' border."
+      :group 'posframe)
+    (defun my-set-posframe-faces ()
+      "Set `posframe' faces."
+      (custom-set-faces
+       `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
+  :config
+  (defvar my-posframe-buffer " *my-posframe-buffer*")
+
+(with-current-buffer (get-buffer-create my-posframe-buffer)
+  (erase-buffer))
+
+
+(when (posframe-workable-p)
+  (posframe-show my-posframe-buffer
+                 :position (point))))
+
+
+
+;; Display dividers between windows
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+(setq scroll-step 1
+      scroll-margin 0
+      scroll-conservatively 100000
+      auto-window-vscroll nil
+      scroll-preserve-screen-position t)
+
 ;; 关闭工具栏
 (tool-bar-mode -1)
 ;; 关闭文件滑动控制

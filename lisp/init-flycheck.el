@@ -27,7 +27,7 @@
   :after flycheck)
 
 
-;; (use-package flymake			
+;; (use-package flymake
 ;;   :hook (prog-mode . flymake-mode)
 ;;   :config
 ;;   (global-set-key (kbd "M-n") #'flymake-goto-next-error)

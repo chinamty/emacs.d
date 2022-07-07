@@ -3,7 +3,7 @@
 ;;; commentary:
 
 ;;; code:
-;;; Emacs 28 native compile
+;; ;;; Emacs 28 native compile
 (when (and (>= emacs-major-version 28)
 	       (fboundp 'native-comp-available-p)
 	       (native-comp-available-p))
@@ -11,6 +11,18 @@
   (setq package-native-compile t)
   (add-to-list 'native-comp-eln-load-path
 	           (expand-file-name "eln-cache" user-emacs-directory)))
+
+;;; macOS special settings
+;; <macOS> Command -> Meta, Option -> Super
+(when (eq system-type 'darwin)
+
+  (setq mac-command-modifier 'meta
+	    mac-option-modifier 'super
+	    ns-use-native-fullscreen t))
+
+(when (>= emacs-major-version 29)
+  (pixel-scroll-precision-mode t))
+
 
 ;;; system coding
 ;; although others may add many other settings here,
@@ -46,18 +58,11 @@
 
 ;; 设置默认窗口位置大小
 ;; 全屏
-;;(setq initial-frame-alist (quote ((fullscreen . maximized))))
-(setq initial-frame-alist '((top . 0) (left . 200)   (width . 80) (height . 100)))
+(setq initial-frame-alist (quote ((fullscreen . maximized))))
+;;(setq initial-frame-alist '((top . 0) (left . 200)   (width . 80) (height . 100)))
 
-;;; macOS special settings
-;; <macOS> Command -> Meta, Option -> Super
-(when (eq system-type 'darwin)
-
-  (setq mac-command-modifier 'meta
-	    mac-option-modifier 'super
-	    ns-use-native-fullscreen t))
-
-
+;; Set default font face
+(set-face-attribute 'default nil :font "SF Mono")
 ;; 设置编码为utf-8
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -80,14 +85,6 @@
 ;; 全局符号补全
 ;;(electric-pair-mode 1)
 
-;; 自动括号匹配
-(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
-(define-advice show-paren-function (:around (fn) fix-show-paren-function)
-  "Highlight enclosing parens."
-  (cond ((looking-at-p "\\s(") (funcall fn))
-	    (t (save-excursion
-	     (ignore-errors (backward-up-list))
-	     (funcall fn)))))
 
 
 ;; Settings for exec-path-from-shell
@@ -95,6 +92,33 @@
   :defer nil
   :if (memq window-system '(mac ns x))
   :init (exec-path-from-shell-initialize))
+
+
+
+(use-package all-the-icons
+  :if (display-graphic-p))
+
+
+(use-package posframe
+  :init
+    (defface posframe-border
+      `((t (:background ,(face-foreground 'shadow nil t))))
+      "Face used by the `posframe' border."
+      :group 'posframe)
+    (defun my-set-posframe-faces ()
+      "Set `posframe' faces."
+      (custom-set-faces
+       `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
+  :config
+  (defvar my-posframe-buffer " *my-posframe-buffer*")
+
+(with-current-buffer (get-buffer-create my-posframe-buffer)
+  (erase-buffer))
+
+
+(when (posframe-workable-p)
+  (posframe-show my-posframe-buffer
+                 :position (point))))
 
 
 (provide 'init-system)

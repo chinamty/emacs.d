@@ -1,8 +1,16 @@
-;;; package --- init-utils -*- lexical-binding: t -*-
+;;; pkackage --- init-utils -*- lexical-binding: t -*-
 ;;; Commentary:
-;;; 
+;;;
 ;;; code:
 
+
+;; add third party packages load path
+
+(add-to-list 'load-path "~/.emacs.d/packages/auto-save")
+(require 'auto-save)
+(auto-save-enable)
+(setq auto-save-silent t)
+(setq auto-save-delete-trailing-whitespace t)
 
 ;; magit
 
@@ -12,17 +20,19 @@
   :ensure nil
   :hook (after-init . global-auto-revert-mode))
 
+(require 'awesome-tray)
+(awesome-tray-mode 1)
 
-(use-package smartparens
-  :init
-  (smartparens-global-mode t)
-  (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
-  (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
-  (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil)
-  :config
-    (sp-with-modes
-        '(c++-mode objc-mode c-mode go-mode)
-      (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
+;; (use-package smartparens
+;;   :init
+;;   (smartparens-global-mode t)
+;;   (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
+;;   (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
+;;   (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil)
+;;   :config
+;;     (sp-with-modes
+;;         '(c++-mode objc-mode c-mode go-mode)
+;;       (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 
 ;; ebook reader
@@ -44,7 +54,7 @@
   :hook (after-init . recentf-mode)
   :config
   (setq-default recentf-max-menu-item 10
-		recentf-max-saved-items 20)
+		recentf-max-saved-items 50)
   (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
 
@@ -90,11 +100,32 @@
   :config
   (setq mc/insert-numbers-default 1))
 (use-package json-mode)
-(use-package projectile
-  :ensure t
+;; (use-package projectile
+;;   :ensure t
+;;   :config
+;;   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;;   (projectile-mode +1))
+
+(use-package keyfreq
+  :init
+   (keyfreq-mode 1)
+   (keyfreq-autosave-mode 1)
   :config
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1))
+   (setq keyfreq-excluded-commands
+      '(self-insert-command
+        forward-char
+        backward-char
+        previous-line
+        keyboard-quit
+        vertico-next
+        vertico-previous
+        backword-delete-char-untabify
+        delete-backward-char
+        mwheel-scroll
+        minibuf-keybroad-quit
+        move-end-of-line
+        save-buffer
+        next-line)))
 
 (provide 'init-utils)
 ;;; init-utils.el ends here

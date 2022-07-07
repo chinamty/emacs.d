@@ -47,15 +47,19 @@
 (setq org-log-into-drawer t)
 
 (global-set-key (kbd "C-c a") 'org-agenda)
-(setq org-agenda-files '("~/gtd.org"))
+(setq org-agenda-files '("~/Documents/org/gtd.org"))
 (setq org-agenda-span 'day)
 
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/gtd.org" "Workspace")
+      '(("t" "Todo" entry (file+headline "~/Documents/org/gtd.org" "Workspace")
 	 "* TODO [#B] %?\n  %i\n %U"
-	 :empty-lines 1)))
+	 :empty-lines 1)
+        ("n" "Note" entry (file "~/Documents/org/gtd.org")
+               "* %U - %^{heading}\n  %?"
+         :empty-lines 1)))
 
-(global-set-key (kbd "C-c r") 'org-capture)
+
+(global-set-key (kbd "C-c c") 'org-capture)
 
 (setq org-agenda-custom-commands
       '(("c" "重要且紧急的事"
@@ -63,15 +67,15 @@
 	;; ...other commands here
 	))
 
-(modify-all-frames-parameters
- '((right-divider-width . 40)
-   (internal-border-width . 40)))
-(dolist (face '(window-divider
-                window-divider-first-pixel
-                window-divider-last-pixel))
-  (face-spec-reset-face face)
-  (set-face-foreground face (face-attribute 'default :background)))
-(set-face-background 'fringe (face-attribute 'default :background))
+;; (modify-all-frames-parameters
+;;  '((right-divider-width . 40)
+;;    (internal-border-width . 40)))
+;; (dolist (face '(window-divider
+;;                 window-divider-first-pixel
+;;                 window-divider-last-pixel))
+;;   (face-spec-reset-face face)
+;;   (set-face-foreground face (face-attribute 'default :background)))
+;; (set-face-background 'fringe (face-attribute 'default :background))
 
 (use-package org-modern
   :init(setq org-hide-emphasis-markers t
