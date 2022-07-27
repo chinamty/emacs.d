@@ -1,38 +1,14 @@
-;;; pkackage --- init-utils -*- lexical-binding: t -*-
+;;; package --- init-utils -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;;
 ;;; code:
 
 
-;; add third party packages load path
-
-(add-to-list 'load-path "~/.emacs.d/packages/auto-save")
-(require 'auto-save)
-(auto-save-enable)
-(setq auto-save-silent t)
-(setq auto-save-delete-trailing-whitespace t)
-
 ;; magit
-
 (use-package magit)
-;; 自动cover被外部修改的文件
-(use-package autorevert
-  :ensure nil
-  :hook (after-init . global-auto-revert-mode))
 
 (require 'awesome-tray)
 (awesome-tray-mode 1)
-
-;; (use-package smartparens
-;;   :init
-;;   (smartparens-global-mode t)
-;;   (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
-;;   (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
-;;   (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil)
-;;   :config
-;;     (sp-with-modes
-;;         '(c++-mode objc-mode c-mode go-mode)
-;;       (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 
 ;; ebook reader
@@ -44,25 +20,24 @@
 (add-hook 'nov-mode-hook 'my-nov-font-setup)
 
 
-;; popwin
-(use-package popwin
-  :hook (after-init . popwin-mode))
-
-;; recentf
-
-(use-package recentf
-  :hook (after-init . recentf-mode)
-  :config
-  (setq-default recentf-max-menu-item 10
-		recentf-max-saved-items 50)
-  (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
-
-
-
-(use-package prog-mode
+;; HideShow Minor Mode
+(use-package hideshow
   :ensure nil
-  :config (global-prettify-symbols-mode t))
+  :diminish hs-minor-mode
+  :hook (prog-mode . hs-minor-mode))
 
+;; subword`可以处理`CamelCasesName`这种驼峰式的单词，<kbd>M-f</kbd>
+;; (`forward-word`) 后，光标会依次停在大写的词上。
+(use-package subword
+  :ensure nil
+  :hook (after-init . global-subword-mode))
+
+;; repeat mode 连续使用c-x时可以不用连续使用c-x
+(use-package repeat
+  :ensure nil
+  :hook (after-init . repeat-mode)
+  :custom
+  (repeat-exit-key (kbd "RET")))
 
 ;; show hot keys
 (use-package which-key
@@ -99,33 +74,30 @@
          ("C-|" . mc/vertical-align-with-space))
   :config
   (setq mc/insert-numbers-default 1))
-(use-package json-mode)
-;; (use-package projectile
-;;   :ensure t
-;;   :config
-;;   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-;;   (projectile-mode +1))
+
 
 (use-package keyfreq
   :init
-   (keyfreq-mode 1)
-   (keyfreq-autosave-mode 1)
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1)
   :config
-   (setq keyfreq-excluded-commands
-      '(self-insert-command
-        forward-char
-        backward-char
-        previous-line
-        keyboard-quit
-        vertico-next
-        vertico-previous
-        backword-delete-char-untabify
-        delete-backward-char
-        mwheel-scroll
-        minibuf-keybroad-quit
-        move-end-of-line
-        save-buffer
-        next-line)))
+  (setq keyfreq-excluded-commands
+        '(self-insert-command
+          forward-char
+          backward-char
+          previous-line
+          keyboard-quit
+          vertico-next
+          vertico-previous
+          backword-delete-char-untabify
+          delete-backward-char
+          mwheel-scroll
+          minibuf-keybroad-quit
+          move-end-of-line
+          save-buffer
+          next-line)))
+
+(require 'thing-edit)
 
 (provide 'init-utils)
 ;;; init-utils.el ends here

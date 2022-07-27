@@ -3,15 +3,6 @@
 ;;; commentary:
 
 ;;; code:
-;; ;;; Emacs 28 native compile
-(when (and (>= emacs-major-version 28)
-	       (fboundp 'native-comp-available-p)
-	       (native-comp-available-p))
-  (setq native-comp-async-report-warnings-errors nil)
-  (setq package-native-compile t)
-  (add-to-list 'native-comp-eln-load-path
-	           (expand-file-name "eln-cache" user-emacs-directory)))
-
 ;;; macOS special settings
 ;; <macOS> Command -> Meta, Option -> Super
 (when (eq system-type 'darwin)
@@ -24,14 +15,10 @@
   (pixel-scroll-precision-mode t))
 
 
-;;; system coding
-;; although others may add many other settings here,
-
 ;;; emacs settinngs
 (setq auto-save-default nil	   ; disable auto save
       make-backup-files nil             ; disable backup file
       create-lockfiles nil
-      global-auto-revert-mode t
       auto-window-vscroll nil
       delete-by-moving-to-trash t  ; disable delete directly
       fast-but-imprecise-scrolling t
@@ -44,25 +31,27 @@
       next-line-add-newlines nil
       visible-bell nil
       )
-
+(setq-default indent-tabs-mode nil
+              cursor-type 'bar)
+(global-auto-revert-mode t)
+(global-linum-mode t)
 (global-hl-line-mode 1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(global-linum-mode 1)
-(set-face-attribute 'default nil :height 180)
-(setq-default indent-tabs-mode nil
-              cursor-type 'bar)
 (delete-selection-mode 1)
+
+;; set font
+(set-face-attribute 'default nil :font "SF Mono" :height 190)
+
 (use-package solarized-theme
               :init (load-theme 'solarized-dark t))
-
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 ;; 设置默认窗口位置大小
 ;; 全屏
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
+;; half screen
 ;;(setq initial-frame-alist '((top . 0) (left . 200)   (width . 80) (height . 100)))
 
-;; Set default font face
-(set-face-attribute 'default nil :font "SF Mono")
 ;; 设置编码为utf-8
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -89,36 +78,40 @@
 
 ;; Settings for exec-path-from-shell
 (use-package exec-path-from-shell
-  :defer nil
-  :if (memq window-system '(mac ns x))
-  :init (exec-path-from-shell-initialize))
-
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 
 
 (use-package all-the-icons
   :if (display-graphic-p))
 
+(use-package posframe)
+;; popwin
+(use-package popwin
+  :hook (after-init . popwin-mode))
 
-(use-package posframe
-  :init
-    (defface posframe-border
-      `((t (:background ,(face-foreground 'shadow nil t))))
-      "Face used by the `posframe' border."
-      :group 'posframe)
-    (defun my-set-posframe-faces ()
-      "Set `posframe' faces."
-      (custom-set-faces
-       `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
+
+(add-to-list 'load-path "~/.emacs.d/packages/auto-save")
+(require 'auto-save)
+(auto-save-enable)
+(setq auto-save-silent t)
+(setq auto-save-delete-trailing-whitespace t)
+
+;; 自动cover被外部修改的文件
+(use-package autorevert
+  :ensure nil
+  :hook (after-init . global-auto-revert-mode))
+
+;; recentf
+
+(use-package recentf
+  :hook (after-init . recentf-mode)
   :config
-  (defvar my-posframe-buffer " *my-posframe-buffer*")
-
-(with-current-buffer (get-buffer-create my-posframe-buffer)
-  (erase-buffer))
-
-
-(when (posframe-workable-p)
-  (posframe-show my-posframe-buffer
-                 :position (point))))
+  (setq-default recentf-max-menu-item 10
+		        recentf-max-saved-items 100)
+  (add-to-list 'recentf-exclude '("~\/.emacs.d\/elpa\/")))
 
 
 (provide 'init-system)
