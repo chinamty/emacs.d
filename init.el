@@ -27,11 +27,14 @@
 (require 'init-python)
 (require 'init-rust)
 
+
 (require 'init-lspbridge)
 (require 'init-treemacs)
 ;;(require 'init-eglot)
 ;;(require 'init-eaf)
 (require 'init-treesitter)
+
+(require 'thing-edit)
 
 
 
