@@ -37,7 +37,7 @@
 (global-set-key (kbd "C-c j") 'lsp-bridge-jump)
 (global-set-key (kbd "C-c b") 'lsp-bridge-jump-back)
 ;; 打开日志，开发者才需要
-(setq lsp-bridge-enable-log t)
+;;(setq lsp-bridge-enable-log t)
 
 (provide 'init-lspbridge)
 ;;; init-lspbridge.el ends here

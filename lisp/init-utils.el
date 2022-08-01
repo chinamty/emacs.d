@@ -7,8 +7,8 @@
 ;; magit
 (use-package magit)
 
-(require 'awesome-tray)
-(awesome-tray-mode 1)
+;;(require 'awesome-tray)
+;;(awesome-tray-mode 1)
 
 
 ;; ebook reader

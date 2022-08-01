@@ -83,6 +83,8 @@
            ("C-c t g" . go-gen-test-dwim)))
 
   (use-package gotest
+    :config
+    (setq go-test-verbose t)
     :bind (:map go-mode-map
            ("C-c t f" . go-test-current-file)
            ("C-c t t" . go-test-current-test)

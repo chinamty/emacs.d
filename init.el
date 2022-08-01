@@ -10,9 +10,9 @@
 (require 'init-system)
 (require 'init-smartpair)
 (require 'init-utils)
-(require 'init-meow)
+
 ;; (require 'init-project)
-;; ;;(require 'init-flycheck)
+
 
 (require 'init-consult)
 (require 'init-vertico)
@@ -28,10 +28,9 @@
 (require 'init-rust)
 
 (require 'init-lspbridge)
-;;(require 'init-treemacs)
-;; ;;(require 'init-lsp)
+(require 'init-treemacs)
 ;;(require 'init-eglot)
-;; ;;(require 'init-eaf)
+;;(require 'init-eaf)
 (require 'init-treesitter)
 
 

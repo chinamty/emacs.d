@@ -2,12 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
-;;(add-to-list 'load-path "~/.emacs.d/packages/emacs-application-framework")
+(add-to-list 'load-path "~/.emacs.d/packages/emacs-application-framework")
 (require 'eaf)
 (require 'eaf-org-previewer)
 (require 'eaf-terminal)
 (require 'eaf-markdown-previewer)
-(require 'eaf-mindmap)
+;;(require 'eaf-mindmap)
 
 (require 'eaf-browser)
 
